@@ -1669,7 +1669,7 @@ class Resource(six.with_metaclass(DeclarativeMetaclass)):
         Returns a serialized list of resources based on the identifiers
         from the URL.
 
-        Calls ``obj_get`` to fetch only the objects requested. This method
+        Calls ``cached_obj_get`` to fetch only the objects requested. This method
         only responds to HTTP GET.
 
         Should return a HttpResponse (200 OK).
@@ -1687,7 +1687,7 @@ class Resource(six.with_metaclass(DeclarativeMetaclass)):
 
         for identifier in obj_identifiers:
             try:
-                obj = self.obj_get(bundle=base_bundle, **{self._meta.detail_uri_name: identifier})
+                obj = self.cached_obj_get(bundle=base_bundle, **{self._meta.detail_uri_name: identifier})
                 bundle = self.build_bundle(obj=obj, request=request)
                 bundle = self.full_dehydrate(bundle, for_list=True)
                 objects.append(bundle)
